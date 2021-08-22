@@ -543,23 +543,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 55430530}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 477b1cc6f5fcba949a351afd0f701bd3, type: 3}
+  m_Script: {fileID: 11500000, guid: 3bdccb59669dcab42adad0ab3fc52225, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnMouseClicked:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 270902605}
-        m_MethodName: set_destination
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  point: {fileID: 2800000, guid: d7442776d785c3a41bd3a5547abe05d7, type: 3}
+  doorway: {fileID: 2800000, guid: 1c727680a9d6d594181aed41c48f038f, type: 3}
+  attack: {fileID: 2800000, guid: a6886bc6547a4c049b0ca0173822e605, type: 3}
+  target: {fileID: 2800000, guid: 73a5ec9f60f2ea9439a043a806924656, type: 3}
+  arrow: {fileID: 2800000, guid: c009acf00c87d10458d8f83ebb50fe0b, type: 3}
 --- !u!4 &55430532
 Transform:
   m_ObjectHideFlags: 0
@@ -4079,6 +4070,18 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &270902606
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 270902604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbcab44a3a31665419f1ed4af092c850, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &278648469
 PrefabInstance:
   m_ObjectHideFlags: 0

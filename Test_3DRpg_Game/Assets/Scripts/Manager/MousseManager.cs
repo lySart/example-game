@@ -1,15 +1,29 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
+//using UnityEngine.Events;
+using System;
 
-[System.Serializable]
-public class EventVector3 : UnityEvent<Vector3>{ }
+//[System.Serializable]
+//public class EventVector3 : UnityEvent<Vector3>{ }
 public class MousseManager : MonoBehaviour
 {
+    public static MousseManager Instance;
+
+    public Texture2D point, doorway, attack, target, arrow;
+
     RaycastHit hitInfo;
 
-    public EventVector3 OnMouseClicked;
+    public event Action<Vector3> OnMouseClicked;
+
+    void Awake()
+    {
+        if (Instance != null)
+            Destroy(gameObject);
+
+            Instance = this;
+
+    }
 
     void Start()
     {
@@ -30,6 +44,12 @@ public class MousseManager : MonoBehaviour
         if (Physics.Raycast(ray, out hitInfo))
         {
             //ChangingMouseCursorTexture
+            switch (hitInfo.collider.gameObject.tag)
+            {
+                case "Ground":
+                    Cursor.SetCursor(target,new Vector2(16, 16), CursorMode.Auto);
+                    break;
+            }
         }
     }
 
