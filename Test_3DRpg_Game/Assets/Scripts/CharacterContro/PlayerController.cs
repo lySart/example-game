@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -9,6 +10,9 @@ public class PlayerController : MonoBehaviour
 
     private Animator anim;
 
+    private GameObject attackTarget;
+    private float lastAttackTime;
+
 
     private void Awake()
     {
@@ -17,12 +21,15 @@ public class PlayerController : MonoBehaviour
     }
     void Start()
     {
-        MousseManager.Instance.OnMouseClicked += MoveToTarget; 
+        MousseManager.Instance.OnMouseClicked += MoveToTarget;
+        MousseManager.Instance.OnEnemyClicked += EventAttack;
     }
 
     void Update()
     {
         SwitchAnimation();
+
+        lastAttackTime -= Time.deltaTime;
     }
 
     private void SwitchAnimation()
@@ -33,5 +40,34 @@ public class PlayerController : MonoBehaviour
     public void MoveToTarget(Vector3 target)
     {
         agent.destination = target;
+    }
+    private void EventAttack(GameObject target)
+    {
+        if (target != null)
+        {
+            attackTarget = target;
+        }
+    }
+
+    IEnumerator MoveToAttackTarget()
+    {
+        agent.isStopped = false;
+
+        transform.LookAt(attackTarget.transform);
+
+        while (Vector3.Distance(attackTarget.transform.position, transform.position) > 1)
+        {
+            agent.destination = attackTarget.transform.position;
+            yield return null;
+        }
+
+        agent.isStopped = true;
+        //Attack
+        if (lastAttackTime < 0)
+        {
+            anim.SetTrigger("Attack");
+            //reset attackTime
+            lastAttackTime = 0.5f;
+        }
     }
 }
