@@ -49,6 +49,9 @@ public class MousseManager : MonoBehaviour
                 case "Ground":
                     Cursor.SetCursor(target,new Vector2(16, 16), CursorMode.Auto);
                     break;
+                case "Enemy":
+                    Cursor.SetCursor(attack, new Vector2(16, 16), CursorMode.Auto);
+                    break;
             }
         }
     }
