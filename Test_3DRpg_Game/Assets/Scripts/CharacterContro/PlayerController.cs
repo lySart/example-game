@@ -58,6 +58,7 @@ public class PlayerController : MonoBehaviour
 
         transform.LookAt(attackTarget.transform);
 
+        // TODO: fixCode
         while (Vector3.Distance(attackTarget.transform.position, transform.position) > 1)
         {
             agent.destination = attackTarget.transform.position;
