@@ -39,6 +39,8 @@ public class PlayerController : MonoBehaviour
 
     public void MoveToTarget(Vector3 target)
     {
+        StopAllCoroutines();
+        agent.isStopped = false;
         agent.destination = target;
     }
     private void EventAttack(GameObject target)
@@ -46,6 +48,7 @@ public class PlayerController : MonoBehaviour
         if (target != null)
         {
             attackTarget = target;
+            StartCoroutine(MoveToAttackTarget());
         }
     }
 
