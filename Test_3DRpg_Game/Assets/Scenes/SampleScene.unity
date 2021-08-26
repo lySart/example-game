@@ -87922,6 +87922,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7744416199860759741, guid: 7c204589ff8103747ac0e4009fc55e2e,
+        type: 3}
+      propertyPath: isGuard
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7744416199860759741, guid: 7c204589ff8103747ac0e4009fc55e2e,
+        type: 3}
+      propertyPath: lookAtTime
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7744416199860759741, guid: 7c204589ff8103747ac0e4009fc55e2e,
+        type: 3}
+      propertyPath: patrolRange
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 7744623511100338159, guid: 7c204589ff8103747ac0e4009fc55e2e,
         type: 3}
       propertyPath: m_Name

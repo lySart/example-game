@@ -19,6 +19,13 @@ public class EnemyController : MonoBehaviour
     private float speed;
 
     private GameObject attackTarget;
+    public float lookAtTime;
+    private float remainLookAtTime;
+
+    [Header("Patrol State")]
+    public float patrolRange;
+    private Vector3 wayPoint;
+    private Vector3 guardPos;
 
     //bool Animation
     bool isWalk, isChase, isFollow;
@@ -28,10 +35,20 @@ public class EnemyController : MonoBehaviour
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         speed = agent.speed;
+        guardPos = transform.position;
+        remainLookAtTime = lookAtTime;
     }
     void Start()
     {
-        
+        if (isGuard)
+        {
+            enemyStates = EnemyStates.GUARD;
+        }
+        else
+        {
+            enemyStates = EnemyStates.PATROL;
+            GetNewWayPoint();
+        }
     }
 
     void Update()
@@ -61,6 +78,24 @@ public class EnemyController : MonoBehaviour
                 break;
 
             case EnemyStates.PATROL:
+                isChase = false;
+                agent.speed = speed * 0.5f;
+
+                //判斷是否到達隨機巡邏點
+                if (Vector3.Distance(wayPoint, transform.position) <= agent.stoppingDistance )
+                {
+                    isWalk = false;
+                    if (remainLookAtTime > 0)
+                        remainLookAtTime -= Time.deltaTime;
+                    else
+                        GetNewWayPoint();
+                }
+                else
+                {
+                    isWalk = true;
+                    agent.destination = wayPoint;
+                }
+
                 break;
 
             case EnemyStates.CHASE:
@@ -71,9 +106,17 @@ public class EnemyController : MonoBehaviour
                 agent.speed = speed;
                 if (!FoundPlayer())
                 {
-                    //TODO: backToLastState
                     isFollow = false;
-                    agent.destination = transform.position;
+                    if (remainLookAtTime > 0)
+                    {
+                        agent.destination = transform.position;
+                        remainLookAtTime -= Time.deltaTime;
+                    }
+                    else if (isGuard)
+                        enemyStates = EnemyStates.GUARD;
+                    else
+                        enemyStates = EnemyStates.PATROL;
+
                 }
                 else
                 {
@@ -104,5 +147,24 @@ public class EnemyController : MonoBehaviour
         attackTarget = null;
         return false;
             
+    }
+
+    void GetNewWayPoint()
+    {
+        remainLookAtTime = lookAtTime;
+
+        float randomX = Random.Range(-patrolRange,patrolRange);
+        float randomZ = Random.Range(-patrolRange, patrolRange);
+
+        Vector3 randomPoint = new Vector3(guardPos.x + randomX, transform.position.y, guardPos.z + randomZ);
+        //獲得隨機點同時不會經過不可穿越的物體
+        NavMeshHit hit;
+        wayPoint = NavMesh.SamplePosition(randomPoint, out hit, patrolRange, 1) ? hit.position : transform.position;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, sightRadius);
     }
 }
