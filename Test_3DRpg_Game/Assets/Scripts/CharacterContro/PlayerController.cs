@@ -7,8 +7,8 @@ using UnityEngine.AI;
 public class PlayerController : MonoBehaviour
 {
     private NavMeshAgent agent;
-
     private Animator anim;
+    private CharacterStats characterStats;
 
     private GameObject attackTarget;
     private float lastAttackTime;
@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
+        characterStats = GetComponent<CharacterStats>();
     }
     void Start()
     {
