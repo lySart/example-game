@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -64,6 +65,32 @@ public class CharacterStats : MonoBehaviour
             characterData.currentDefence = value;
         }
     }
+    #endregion
+
+    #region Character Combat
+
+    public void TakeDamage(CharacterStats attacker, CharacterStats defener)
+    {
+        int damage = Mathf.Max(attacker.CurrentDamage() - defener.CurrentDefence, 0);
+        CurrentHealth = Mathf.Max(CurrentHealth - damage, 0);
+
+        //TODO:Update UI
+        //TODO:Update Exp
+    }
+
+    private int CurrentDamage()
+    {
+        float coreDamage = UnityEngine.Random.Range(attackData.minDamage, attackData.maxDamage);
+
+        if (isCritical)
+        {
+            coreDamage *= attackData.criticalMultiplier;
+            Debug.Log("Critical!" + coreDamage);
+        }
+
+        return (int)coreDamage;
+    }
+
     #endregion
 
     void Start()

@@ -212,6 +212,16 @@ public class EnemyController : MonoBehaviour
         wayPoint = NavMesh.SamplePosition(randomPoint, out hit, patrolRange, 1) ? hit.position : transform.position;
     }
 
+    //Animation Event
+    void EnemyHit()
+    {
+        if (attackTarget != null)
+        {
+            var targetState = attackTarget.GetComponent<CharacterStats>();
+            targetState.TakeDamage(characterStats, targetState);
+        }
+    }
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.blue;
