@@ -8,7 +8,7 @@ using System;
 //public class EventVector3 : UnityEvent<Vector3>{ }
 public class MousseManager : Singleton<MousseManager>
 {
-    public static MousseManager Instance;
+    //public static MousseManager Instance;
 
     public Texture2D point, doorway, attack, target, arrow;
 
@@ -29,7 +29,7 @@ public class MousseManager : Singleton<MousseManager>
     protected override void Awake()
     {
         base.Awake();
-        DontDestroyOnLoad();
+        //DontDestroyOnLoad(this);
     }
 
     void Start()
