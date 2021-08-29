@@ -6,7 +6,7 @@ using System;
 
 //[System.Serializable]
 //public class EventVector3 : UnityEvent<Vector3>{ }
-public class MousseManager : MonoBehaviour
+public class MousseManager : Singleton<MousseManager>
 {
     public static MousseManager Instance;
 
@@ -17,13 +17,19 @@ public class MousseManager : MonoBehaviour
     public event Action<Vector3> OnMouseClicked;
     public event Action<GameObject> OnEnemyClicked;
 
-    void Awake()
+    /*void Awake()
     {
         if (Instance != null)
             Destroy(gameObject);
 
             Instance = this;
 
+    }*/
+
+    protected override void Awake()
+    {
+        base.Awake();
+        DontDestroyOnLoad();
     }
 
     void Start()

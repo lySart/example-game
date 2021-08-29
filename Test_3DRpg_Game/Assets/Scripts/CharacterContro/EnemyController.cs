@@ -12,6 +12,7 @@ public class EnemyController : MonoBehaviour
     private NavMeshAgent agent;
     private Animator anim;
     private CharacterStats characterStats;
+    private Collider coll;
 
     [Header("Basic Settings")]
     public float sightRadius; //敵人可視範圍
@@ -23,6 +24,7 @@ public class EnemyController : MonoBehaviour
     public float lookAtTime;
     private float remainLookAtTime;
     private float lastAttackTime;
+    private Quaternion guardRotation;
 
     [Header("Patrol State")]
     public float patrolRange;
@@ -30,15 +32,17 @@ public class EnemyController : MonoBehaviour
     private Vector3 guardPos;
 
     //bool Animation
-    bool isWalk, isChase, isFollow;
+    bool isWalk, isChase, isFollow, isDead;
 
     private void Awake()
     {
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         characterStats = GetComponent<CharacterStats>();
+        coll = GetComponent<Collider>();
         speed = agent.speed;
         guardPos = transform.position;
+        guardRotation = transform.rotation;
         remainLookAtTime = lookAtTime;
         
     }
@@ -57,6 +61,9 @@ public class EnemyController : MonoBehaviour
 
     void Update()
     {
+        if (characterStats.CurrentHealth == 0)
+            isDead = true;
+
         SwitchStates();
         SwitchAnimation();
         lastAttackTime -= Time.deltaTime;
@@ -68,11 +75,16 @@ public class EnemyController : MonoBehaviour
         anim.SetBool("Chase", isChase);
         anim.SetBool("Follow", isFollow);
         anim.SetBool("Critical", characterStats.isCritical);
+        anim.SetBool("Death", isDead);
     }
 
     void SwitchStates()
     {
-        if (FoundPlayer())
+        if (isDead)
+            enemyStates = EnemyStates.DEAD;
+
+        //發現player切換CHASE
+        else if (FoundPlayer())
         {
             enemyStates = EnemyStates.CHASE;
             //Debug.Log("FOUNDPLAYER");
@@ -81,6 +93,19 @@ public class EnemyController : MonoBehaviour
         switch (enemyStates)
         {
             case EnemyStates.GUARD:
+                isChase = false;
+
+                if (transform.position != guardPos)
+                { 
+                    isWalk = true;
+                    agent.isStopped = false;
+                    agent.destination = guardPos;
+
+                    if (Vector3.SqrMagnitude(guardPos - transform.position) <= agent.stoppingDistance)
+                        isWalk = false;
+                    transform.rotation = Quaternion.Lerp(transform.rotation, guardRotation,0.01f);
+                }
+
                 break;
 
             case EnemyStates.PATROL:
@@ -149,6 +174,10 @@ public class EnemyController : MonoBehaviour
                 break;
 
             case EnemyStates.DEAD:
+                coll.enabled = false;
+                agent.enabled = false;
+                Destroy(gameObject,2f);
+
                 break;
         }
     }
@@ -227,4 +256,4 @@ public class EnemyController : MonoBehaviour
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, sightRadius);
     }
-}
+}   
