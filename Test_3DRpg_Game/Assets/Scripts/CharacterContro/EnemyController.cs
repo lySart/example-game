@@ -6,6 +6,7 @@ using UnityEngine.AI;
 
 public enum EnemyStates {GUARD, PATROL, CHASE, DEAD }
 [RequireComponent(typeof(NavMeshAgent))] //判斷如沒component將自動添加
+[RequireComponent(typeof(CharacterStats))]
 public class EnemyController : MonoBehaviour, IEndGameObserver
 {
     private EnemyStates enemyStates;
