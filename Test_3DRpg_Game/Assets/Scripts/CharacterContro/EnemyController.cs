@@ -21,7 +21,7 @@ public class EnemyController : MonoBehaviour, IEndGameObserver
     public bool isGuard;
     private float speed;
 
-    private GameObject attackTarget;
+    protected GameObject attackTarget; //改成protected类讓子類可以訪問
     public float lookAtTime;
     private float remainLookAtTime;
     private float lastAttackTime;
