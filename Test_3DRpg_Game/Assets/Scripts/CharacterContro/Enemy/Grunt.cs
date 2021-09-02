@@ -6,19 +6,9 @@ using UnityEngine.AI;
 public class Grunt : EnemyController
 {
     [Header("Skill")]
-    public float kickForce = 10f;
+    public float kickForce = 10;
 
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
-
-    public void kickOff()
+    public void KickOff()
     {
         if (attackTarget != null)
         {
@@ -27,8 +17,9 @@ public class Grunt : EnemyController
             Vector3 direction = attackTarget.transform.position - transform.position;
             direction.Normalize();
 
-            attackTarget    .GetComponent<NavMeshAgent>().isStopped = true;
+            attackTarget.GetComponent<NavMeshAgent>().isStopped = true;
             attackTarget.GetComponent<NavMeshAgent>().velocity = direction * kickForce;
+            attackTarget.GetComponent<Animator>().SetTrigger("Dizzy");
         }
     }
 }

@@ -69,7 +69,7 @@ public class EnemyController : MonoBehaviour, IEndGameObserver
     //}
     void OnDisable()
     {
-        if (GameManager.Isintialized) return;   
+        if (!GameManager.Isintialized) return;   
         GameManager.Instance.RemoveObserver(this);
     }
 
@@ -192,7 +192,8 @@ public class EnemyController : MonoBehaviour, IEndGameObserver
 
             case EnemyStates.DEAD:
                 coll.enabled = false;
-                agent.enabled = false;
+                //agent.enabled = false;
+                agent.radius = 0;
                 Destroy(gameObject,2f);
 
                 break;
