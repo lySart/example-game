@@ -89,6 +89,11 @@ public class CharacterStats : MonoBehaviour
         //TODO:Update Exp
     }
 
+    public void TakeDamage(int damage, CharacterStats defener)
+    {
+
+    }
+
     private int CurrentDamage()
     {
         float coreDamage = UnityEngine.Random.Range(attackData.minDamage, attackData.maxDamage);
