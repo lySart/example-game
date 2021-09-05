@@ -8,20 +8,31 @@ public class Rock : MonoBehaviour
     public enum RockStates {HitEnemy, HitPlayer, HitNothing }  
 
     private Rigidbody rb;
-    private RockStates rockStates;
+    public RockStates rockStates;
 
     [Header("Basic Settings")]
     public float force;
     public int damage;
     public GameObject target;
     private Vector3 direction;
+    public GameObject rockBreakEffect;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        rb.velocity = Vector3.one;
         rockStates = RockStates.HitPlayer;
         FlyToTarget();
 
+    }
+
+     void FixedUpdate()
+    {
+        if (rb.velocity.magnitude < 1)
+        {
+            rockStates = RockStates.HitNothing;
+
+        }
     }
 
     public void FlyToTarget()
@@ -50,7 +61,16 @@ public class Rock : MonoBehaviour
 
                     rockStates = RockStates.HitNothing;
                 }
+                break;
 
+            case RockStates.HitEnemy:
+                if (other.gameObject.GetComponent<Golem>())
+                {
+                    var otherStats = other.gameObject.GetComponent<CharacterStats>();
+                    otherStats.TakeDamage(damage, otherStats);
+                    Instantiate(rockBreakEffect,transform.position, Quaternion.identity);
+                    Destroy(gameObject);
+                }
                 break;
         }
     }

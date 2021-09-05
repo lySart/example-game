@@ -91,7 +91,8 @@ public class CharacterStats : MonoBehaviour
 
     public void TakeDamage(int damage, CharacterStats defener)
     {
-
+        int currentDamage = Mathf.Max(damage - defener.CurrentDefence, 0);
+        CurrentHealth = Mathf.Max(CurrentHealth - currentDamage, 0);
     }
 
     private int CurrentDamage()
