@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,14 +12,40 @@ public class CharacterData_SO : ScriptableObject
     public int baseDefence;
     public int currentDefence;
 
-    void Start()
+    [Header("Kill")]
+    public int killPoint;
+
+    [Header("Level")]
+    public int currentLevel;
+    public int maxLevel;
+    public int baseExp;
+    public int currentExp;
+    public float levelBuff;
+
+    public float LevelMutiplier
     {
-        
+        get { return 1 + (currentLevel - 1) * levelBuff; }
     }
 
-   
-    void Update()
+    public void UpdateExp(int point)
     {
-        
+        currentExp += point;
+
+        if (currentExp >= baseExp)
+        {
+            levelUp();
+        }   
+    }
+
+    private void levelUp()
+    {
+        //所有升級數據方法
+        currentLevel = Mathf.Clamp(currentLevel + 1, 0, maxLevel);
+        baseExp += (int)(baseExp * LevelMutiplier);
+
+        maxHealth = (int)(maxHealth * LevelMutiplier);
+        currentHealth = maxHealth;
+
+        Debug.Log("Level Up" + currentLevel + "Max Health" + maxHealth);
     }
 }
