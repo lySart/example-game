@@ -10,5 +10,6 @@ public class TransitionDestination : MonoBehaviour
     }
 
     public DestinationTag destinationTag;
-  
+
+    public int Length { get; internal set; }
 }

@@ -1364,6 +1364,8 @@ GameObject:
   - component: {fileID: 470718953442513667}
   - component: {fileID: 470718953442513664}
   - component: {fileID: 1093155845}
+  - component: {fileID: 470718953708697173}
+  - component: {fileID: 8776901923395603751}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -1455,6 +1457,38 @@ CapsuleCollider:
   m_Height: 1.4
   m_Direction: 1
   m_Center: {x: 0, y: 0.7, z: 0}
+--- !u!114 &470718953708697173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1884548868039176097}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 827afc82e4e45824b984378421808ea5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  templateData: {fileID: 0}
+  characterData: {fileID: 11400000, guid: 08d205cdb45c69c4398f2d273324b5c1, type: 2}
+  attackData: {fileID: 11400000, guid: 1ec158eb51e27e84c8c6bc69b6100dc3, type: 2}
+  isCritical: 0
+--- !u!54 &8776901923395603751
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1884548868039176097}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1884548868039176099
 GameObject:
   m_ObjectHideFlags: 0

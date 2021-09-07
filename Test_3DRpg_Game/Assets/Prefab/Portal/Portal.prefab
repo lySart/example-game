@@ -14,8 +14,8 @@ GameObject:
   - component: {fileID: 5505363897704479887}
   - component: {fileID: 2618624640450018309}
   m_Layer: 0
-  m_Name: Protal
-  m_TagString: Untagged
+  m_Name: Portal
+  m_TagString: Portal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -108,8 +108,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1.23}
-  m_Center: {x: -7.6163195e-27, y: 0, z: 3.0616168e-17}
+  m_Size: {x: 1, y: 0.22330922, z: 0.9008554}
+  m_Center: {x: 8.493286e-27, y: -0.21, z: 3.0616168e-17}
 --- !u!1 &8444910009711696929
 GameObject:
   m_ObjectHideFlags: 0
