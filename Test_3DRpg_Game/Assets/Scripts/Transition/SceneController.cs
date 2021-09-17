@@ -69,4 +69,39 @@ public class SceneController : Singleton<SceneController>
 
         return null;
     }
+
+    public void TransitionToMainMenu()
+    {
+        StartCoroutine(LoadMain());
+    }
+
+    public void TransitionToLoadGame()
+    {
+        StartCoroutine(LoadLevel(SaveManager.Instance.SceneName));
+    }
+
+    public void TransitionToFirstLevel()
+    {
+        StartCoroutine(LoadLevel("SampleScene"));
+    }
+
+    IEnumerator LoadLevel(string scene)
+    {
+        if(scene != "")//string类型 物体为空使用開關引號
+        {
+            yield return SceneManager.LoadSceneAsync(scene);
+            yield return Instantiate(playerPerfab, GameManager.Instance.GetEntrance().position, GameManager.Instance.GetEntrance().rotation);
+
+            //SaveData
+            SaveManager.Instance.SavePlayerData();
+            yield break;
+        }
+
+    }
+
+    IEnumerator LoadMain()
+    {
+        yield return SceneManager.LoadSceneAsync("MainMenu");
+        yield break;
+    }
 }
