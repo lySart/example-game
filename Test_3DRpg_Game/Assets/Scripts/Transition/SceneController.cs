@@ -4,9 +4,12 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.AI;
 
-public class SceneController : Singleton<SceneController>
+public class SceneController : Singleton<SceneController>, IEndGameObserver
 {
     public GameObject playerPerfab;
+    public SceneFader sceneFaderPerfab;
+    bool fadeFinished;
+
     GameObject player;
     NavMeshAgent playereAgent;
 
@@ -14,6 +17,12 @@ public class SceneController : Singleton<SceneController>
     {
         base.Awake();
         DontDestroyOnLoad(this);
+    }
+
+    void Start()
+    {
+        GameManager.Instance.AddObserver(this);
+        fadeFinished = true;
     }
 
     public void TransitionToDestination(TransitionPoint transitionPoint)
@@ -87,13 +96,16 @@ public class SceneController : Singleton<SceneController>
 
     IEnumerator LoadLevel(string scene)
     {
+        SceneFader fade = Instantiate(sceneFaderPerfab);
         if(scene != "")//string类型 物体为空使用開關引號
         {
+            yield return StartCoroutine(fade.FadeOut(2.5f));
             yield return SceneManager.LoadSceneAsync(scene);
             yield return Instantiate(playerPerfab, GameManager.Instance.GetEntrance().position, GameManager.Instance.GetEntrance().rotation);
 
             //SaveData
             SaveManager.Instance.SavePlayerData();
+            yield return StartCoroutine(fade.FadeIn(2.5f));
             yield break;
         }
 
@@ -101,7 +113,20 @@ public class SceneController : Singleton<SceneController>
 
     IEnumerator LoadMain()
     {
+        SceneFader fade = Instantiate(sceneFaderPerfab);
+        yield return StartCoroutine(fade.FadeOut(2.5f));
         yield return SceneManager.LoadSceneAsync("MainMenu");
+        yield return StartCoroutine(fade.FadeIn(2.5f));
         yield break;
+    }
+
+    public void EndNotify()
+    {
+        if (fadeFinished)
+        {
+            fadeFinished = false;
+            StartCoroutine(LoadMain());
+        }
+
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Playables;
 
 public class MainMenu : MonoBehaviour
 {
@@ -9,18 +10,28 @@ public class MainMenu : MonoBehaviour
     Button continueBtn;
     Button quitBtn;
 
+    PlayableDirector director;
+
     void Awake()
     {
         newGameBtn = transform.GetChild(1).GetComponent<Button>();
         continueBtn = transform.GetChild(2).GetComponent<Button>();
         quitBtn = transform.GetChild(3).GetComponent<Button>();
+        director = FindObjectOfType<PlayableDirector>();
 
-        newGameBtn.onClick.AddListener(NewGame);
+        director.stopped += NewGame;
+
+        newGameBtn.onClick.AddListener(playTimeline);
         continueBtn.onClick.AddListener(ContinueGame);
         quitBtn.onClick.AddListener(QuitGame);
     }
 
-    void NewGame()
+    void playTimeline()
+    {
+        director.Play();
+    }
+
+    void NewGame(PlayableDirector obj)
     {
         PlayerPrefs.DeleteAll();
         //ChgScene;

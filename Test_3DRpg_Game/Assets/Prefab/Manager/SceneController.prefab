@@ -45,3 +45,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPerfab: {fileID: 1884548868039176097, guid: 2c4cd84f1ebaa8c408f806a2944aadc7,
     type: 3}
+  sceneFaderPerfab: {fileID: 627845000474587711, guid: e1eaec606e908104eb087193c7c619c2,
+    type: 3}
